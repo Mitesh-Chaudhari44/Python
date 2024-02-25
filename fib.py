@@ -1,5 +1,4 @@
 n=int(input("Enter the terms you want"))
-
 def fib(n):
 
     a = 0
