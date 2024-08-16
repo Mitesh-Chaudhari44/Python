@@ -7,3 +7,4 @@ for age in ages:
 
 average_age = total_age / num_of_ages
 print("Average age:", average_age)
+#"this is avg.py"

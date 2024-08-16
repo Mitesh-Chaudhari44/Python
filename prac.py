@@ -1,28 +1,30 @@
-# Import and initialize the pygame library
-import pygame
-pygame.init()
+from manim import *
 
-# Set up the drawing window
-screen = pygame.display.set_mode([600, 400])
 
-# Run until the user asks to quit
-running = True
-while running:
+class PlotCurve(Scene):
+    def construct(self):
+        # Define the curve function
+        def curve_function(y):
+            return (y - 1) * (y - 2) * (y - 3)
 
-    # Did the user click the window close button?
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+        # Create axes
+        axes = Axes(
+            x_range=[-3, 4, 1],
+            y_range=[-4, 4, 1],
+            axis_config={"color": BLUE},
+        )
 
-    # Fill the background with white
-    screen.fill((255, 255, 255))
+        # Plot the curve
+        curve = ParametricFunction(lambda t: [curve_function(t), t, 0], t_range=[-3, 4], color=GREEN)
 
-    # Draw a solid blue circle in the center
-    pygame.draw.circle(screen, (0, 0, 0), (300, 200), 75)
-    pygame.draw.circle(screen, (255, 255, 0), (300,200), 75, draw_top_right=True, draw_bottom_left=True)
+        # Add objects to the scene
+        self.add(axes, curve)
+        self.wait()
 
-    # Flip the display
-    pygame.display.flip()
 
-# Done! Time to quit.
-pygame.quit()
+# Render the scene
+if __name__ == "__main__":
+    config = {"quality": "medium", "pixel_height": 720, "pixel_width": 1280}
+    renderer = "cairo"  # or "opengl" for faster rendering
+    scene = PlotCurve()
+    scene.render(config=config, renderer=renderer)
